@@ -31,7 +31,7 @@ resource "aws_eip" "ngw" {
   vpc = true
 }
 
-resource "aws_nat_gateway" "example" {
+resource "aws_nat_gateway" "ngw" {
   allocation_id = aws_eip.ngw.id
   subnet_id     = module.subnets["public"].out[0].id
 
@@ -58,6 +58,18 @@ resource "aws_route_table_association" "public" {
   count          = length(module.subnets["public"].out[*].id)
   subnet_id      = element(module.subnets["public"].out[*].id, count.index)
   route_table_id = aws_route_table.route-tables["public"].id
+}
+
+resource "aws_route" "private-apps" {
+  route_table_id         = aws_route_table.route-tables["apps"].id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.ngw.id
+}
+
+resource "aws_route" "private-db" {
+  route_table_id         = aws_route_table.route-tables["db"].id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.ngw.id
 }
 
 //resource "aws_route" "private-apps" {
