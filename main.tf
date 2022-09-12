@@ -27,6 +27,19 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
+resource "aws_eip" "ngw" {
+  vpc = true
+}
+
+resource "aws_nat_gateway" "example" {
+  allocation_id = aws_eip.ngw.id
+  subnet_id     = module.subnets["public"].out[*].id[0]
+
+  tags = {
+    Name = "gw NAT"
+  }
+}
+
 resource "aws_route_table" "route-tables" {
   for_each = var.subnets
   vpc_id   = aws_vpc.main.id
