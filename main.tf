@@ -13,8 +13,6 @@ module "subnets" {
   vpc_id   = aws_vpc.main.id
   AZ       = var.AZ
   env      = var.env
-  //igw_id   = aws_internet_gateway.igw.id
-  //route_tables = aws_route_table.route-tables
 }
 
 module "routes" {
