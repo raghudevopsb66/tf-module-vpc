@@ -11,9 +11,9 @@ resource "aws_route_table" "route-tables" {
 //  route_table_id = aws_route_table.route-tables.id
 //}
 
-//resource "local_file" "foo" {
-//  content  = replace(replace(jsonencode(var.subnet_ids), "\"", ""), ":", "=")
-//  filename = "/tmp/out"
-//}
+resource "local_file" "foo" {
+  content  = jsonencode(var.subnet_ids)
+  filename = "/tmp/out"
+}
 
 
