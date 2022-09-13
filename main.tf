@@ -31,12 +31,12 @@ output "out" {
   value = module.subnets
 }
 
-output "subnet_ids" {
-  //  value = {
-  //    for k, v in module.subnets["public"].out : k => v.id
-  //  }
-  value = module.subnets.subnet_ids
-}
+//output "subnet_ids" {
+//  //  value = {
+//  //    for k, v in module.subnets["public"].out : k => v.id
+//  //  }
+//  value = module.subnets.subnet_ids
+//}
 
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
