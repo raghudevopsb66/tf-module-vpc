@@ -20,11 +20,11 @@ module "subnets" {
 }
 
 module "routes" {
-  for_each = var.subnets
-  source   = "./routes"
-  vpc_id   = aws_vpc.main.id
-  name     = each.value["name"]
-  //subnet_ids =
+  for_each   = var.subnets
+  source     = "./routes"
+  vpc_id     = aws_vpc.main.id
+  name       = each.value["name"]
+  subnet_ids = module.subnets.out[name]
 }
 
 output "out" {
