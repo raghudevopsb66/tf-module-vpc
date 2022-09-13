@@ -24,7 +24,7 @@ module "routes" {
   source   = "./routes"
   vpc_id   = aws_vpc.main.id
   name     = each.value["name"]
-  //subnet_ids = module.subnets["name"].out[*].id
+  subnet_ids =
 }
 
 output "out" {
@@ -32,9 +32,10 @@ output "out" {
 }
 
 output "subnet_ids" {
-  value = {
-    for k, v in module.subnets["public"].out : k => v.id
-  }
+//  value = {
+//    for k, v in module.subnets["public"].out : k => v.id
+//  }
+  value = module.subnets.subnet_ids
 }
 
 resource "aws_internet_gateway" "igw" {
