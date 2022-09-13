@@ -16,7 +16,7 @@ resource "aws_route_table" "route-tables" {
 //  filename = "/tmp/out"
 //}
 
-output "out" {
-  value = jsonencode(var.subnet_ids[var.name])
-}
+//output "out" {
+//  value = jsonencode(var.subnet_ids[var.name])
+//}
 
