@@ -24,7 +24,7 @@ module "routes" {
   source     = "./routes"
   vpc_id     = aws_vpc.main.id
   name       = each.value["name"]
-  subnet_ids = module.subnets
+  subnet_ids = module.subnets["name"]
 }
 
 output "out" {
