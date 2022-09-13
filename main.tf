@@ -32,8 +32,9 @@ output "out" {
 }
 
 output "subnet_ids" {
-  for_each = module.subnets.subnet_ids
-  value    = each.value["public"]
+  value = {
+    for k, v in module.subnets["public"].out : k => v.id
+  }
 }
 
 resource "aws_internet_gateway" "igw" {
