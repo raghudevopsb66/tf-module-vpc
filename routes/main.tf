@@ -17,6 +17,6 @@ resource "aws_route_table" "route-tables" {
 //}
 
 output "out" {
-  value = jsondecode(var.subnet_ids[var.name])
+  value = jsonencode(var.subnet_ids[var.name])
 }
 

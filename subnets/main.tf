@@ -14,8 +14,6 @@ output "out" {
 }
 
 output "subnet_ids" {
-  value = {
-    for k, v in aws_subnet.main : k => v.id
-  }
+  value = [for s in aws_subnet.main : s.id]
 }
 
