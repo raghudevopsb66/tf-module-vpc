@@ -11,10 +11,10 @@ resource "aws_route_table" "route-tables" {
 //  route_table_id = aws_route_table.route-tables.id
 //}
 
-//resource "local_file" "foo" {
-//  content  = tomap(jsonencode(var.subnet_ids[var.name].subnet_ids))
-//  filename = "/tmp/out"
-//}
+resource "local_file" "foo" {
+  content  = tomap(var.subnet_ids[var.name].subnet_ids)
+  filename = "/tmp/out"
+}
 
 //output "out" {
 //  value = jsonencode(var.subnet_ids[var.name])
