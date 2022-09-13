@@ -11,12 +11,13 @@ resource "aws_route_table_association" "assoc" {
   route_table_id = aws_route_table.route-tables.id
 }
 
-resource "local_file" "foo" {
-  content  = length(var.subnet_ids[var.name].subnet_ids)
-  filename = "/tmp/out"
+
+resource "aws_route" "public" {
+  count                  = var.name == "public" ? 1 : 0
+  route_table_id         = aws_route_table.route-tables.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = var.gateway_id
 }
 
-//output "out" {
-//  value = jsonencode(var.subnet_ids[var.name])
-//}
+
 

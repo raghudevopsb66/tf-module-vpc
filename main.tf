@@ -20,23 +20,19 @@ module "subnets" {
 }
 
 module "routes" {
-  for_each   = var.subnets
-  source     = "./routes"
-  vpc_id     = aws_vpc.main.id
-  name       = each.value["name"]
-  subnet_ids = module.subnets
+  for_each       = var.subnets
+  source         = "./routes"
+  vpc_id         = aws_vpc.main.id
+  name           = each.value["name"]
+  subnet_ids     = module.subnets
+  gateway_id     = aws_internet_gateway.igw.id
+  nat_gateway_id = aws_nat_gateway.ngw.id
 }
 
 output "out" {
   value = module.subnets
 }
 
-//output "subnet_ids" {
-//  //  value = {
-//  //    for k, v in module.subnets["public"].out : k => v.id
-//  //  }
-//  value = module.subnets.subnet_ids
-//}
 
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
@@ -67,12 +63,7 @@ resource "aws_nat_gateway" "ngw" {
 //  gateway_id             = aws_internet_gateway.igw.id
 //}
 //
-//resource "aws_route_table_association" "public" {
-//  count          = length(module.subnets["public"].out[*].id)
-//  subnet_id      = element(module.subnets["public"].out[*].id, count.index)
-//  route_table_id = aws_route_table.route-tables["public"].id
-//}
-//
+
 //resource "aws_route" "private-apps" {
 //  route_table_id         = aws_route_table.route-tables["apps"].id
 //  destination_cidr_block = "0.0.0.0/0"
@@ -83,18 +74,6 @@ resource "aws_nat_gateway" "ngw" {
 //  route_table_id         = aws_route_table.route-tables["db"].id
 //  destination_cidr_block = "0.0.0.0/0"
 //  nat_gateway_id         = aws_nat_gateway.ngw.id
-//}
-//
-//resource "aws_route_table_association" "apps" {
-//  count          = length(module.subnets["apps"].out[*].id)
-//  subnet_id      = element(module.subnets["apps"].out[*].id, count.index)
-//  route_table_id = aws_route_table.route-tables["apps"].id
-//}
-//
-//resource "aws_route_table_association" "db" {
-//  count          = length(module.subnets["db"].out[*].id)
-//  subnet_id      = element(module.subnets["db"].out[*].id, count.index)
-//  route_table_id = aws_route_table.route-tables["db"].id
 //}
 //
 //resource "aws_vpc_peering_connection" "peering-to-default-vpc" {
