@@ -12,7 +12,7 @@ resource "aws_route_table" "route-tables" {
 //}
 
 resource "local_file" "foo" {
-  content  = tomap(var.subnet_ids[var.name].subnet_ids)
+  content  = length(var.subnet_ids[var.name].subnet_ids)
   filename = "/tmp/out"
 }
 
