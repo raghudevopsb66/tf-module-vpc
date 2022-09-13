@@ -28,7 +28,7 @@ module "routes" {
 }
 
 output "out" {
-  value = module.routes
+  value = module.subnets
 }
 
 //output "subnet_ids" {
