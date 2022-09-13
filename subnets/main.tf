@@ -12,3 +12,8 @@ resource "aws_subnet" "main" {
 output "out" {
   value = aws_subnet.main
 }
+
+output "subnet_ids" {
+  value = aws_subnet.main.*.id
+}
+
