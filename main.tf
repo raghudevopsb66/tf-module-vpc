@@ -29,11 +29,6 @@ module "routes" {
   vpc_peering_connection_id = aws_vpc_peering_connection.peering-to-default-vpc.id
 }
 
-output "out" {
-  value = module.subnets
-}
-
-
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
@@ -48,7 +43,7 @@ resource "aws_eip" "ngw" {
 
 resource "aws_nat_gateway" "ngw" {
   allocation_id = aws_eip.ngw.id
-  subnet_id     = module.subnets["public"].out[0].id
+  subnet_id     = module.subnets["public"].subnets[0].id
 
   tags = {
     Name = "gw NAT"
