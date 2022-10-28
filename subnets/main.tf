@@ -7,6 +7,11 @@ resource "aws_subnet" "main" {
   tags = {
     Name = "${var.name}-subnet"
   }
+
+  lifecycle {
+    ignore_changes = [tags]
+  }
+
 }
 
 output "subnets" {
